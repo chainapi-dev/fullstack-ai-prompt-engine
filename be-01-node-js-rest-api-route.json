@@ -1,0 +1,211 @@
+{
+  "id": "BE-01",
+  "category": "Backend / Express",
+  "title": "Node.js REST API Route",
+  "description": "Generates complete Express.js API routes with Zod validation middleware, JWT auth, async error handling, structured JSON responses, proper HTTP status codes, and Winston request logging.",
+  "system_prompt": "You are an expert Node.js backend engineer specializing in RESTful API development with Express.js. You create production-grade API endpoints with comprehensive request validation, proper error handling, security best practices, and TypeScript type safety. Your code follows RESTful conventions, includes proper HTTP status codes, and implements middleware composition patterns.\n\nInternal Chain-of-Thought Process:\nStep 1: Analyze the requirements, constraints, and edge cases provided.\nStep 2: Execute the chain sequentially \u2014 validate inputs, design structure, implement logic with error handling.\nStep 3: Output ONLY valid, complete production-ready code with no placeholders or TODOs.\n\nYou MUST follow the exact schema structure provided. All outputs must be parseable JSON matching the specified output_format.",
+  "user_prompt_template": "Generate production-ready code based on the following specification:\n\nTask: {{task}}\nConstraints: {{constraints}}\nChain Steps: {{chain_steps}}\nMemory State: {{memory_state}}\nOutput Format: {{output_format}}\n\nRespond with ONLY a JSON object matching the output_format structure exactly.",
+  "tool_schema": {
+    "name": "generate_node_api_route",
+    "description": "Generates complete Express.js API routes with Zod validation middleware, JWT auth, async error handling, structured JSON responses, proper HTTP status codes, and Winston request logging.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "task": {
+          "type": "string",
+          "enum": [
+            "node_api_route"
+          ]
+        },
+        "constraints": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "enum": [
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE"
+              ]
+            },
+            "auth_required": {
+              "type": "boolean",
+              "default": true
+            },
+            "validation_lib": {
+              "type": "string",
+              "enum": [
+                "zod",
+                "joi"
+              ],
+              "default": "zod"
+            },
+            "logging": {
+              "type": "boolean",
+              "default": true
+            },
+            "max_tokens": {
+              "type": "integer",
+              "default": 2500
+            }
+          },
+          "required": [
+            "method"
+          ]
+        },
+        "chain_steps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "validate",
+              "auth",
+              "sanitize",
+              "logic",
+              "response",
+              "logging",
+              "error_handling"
+            ]
+          },
+          "minItems": 2
+        },
+        "memory_state": {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "string",
+              "default": "string"
+            },
+            "user_context": {
+              "type": "string",
+              "default": "object|null"
+            }
+          }
+        },
+        "output_format": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string"
+            },
+            "chain_executed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "http_methods": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "middleware_used": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "status_codes": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "chain_executed",
+            "http_methods",
+            "middleware_used",
+            "status_codes"
+          ]
+        }
+      },
+      "required": [
+        "task",
+        "constraints",
+        "chain_steps",
+        "memory_state",
+        "output_format"
+      ]
+    }
+  },
+  "tool_choice": {
+    "type": "tool",
+    "name": "generate_node_api_route"
+  },
+  "example_usage": {
+    "input": {
+      "task": "node_api_route",
+      "constraints": {
+        "method": "POST",
+        "auth_required": true,
+        "validation_lib": "zod"
+      },
+      "chain_steps": [
+        "validate",
+        "auth",
+        "logic",
+        "response",
+        "error_handling"
+      ],
+      "memory_state": {
+        "request_id": "string",
+        "user_context": "object|null"
+      },
+      "output_format": {
+        "code": "string",
+        "chain_executed": "array",
+        "http_methods": "array",
+        "middleware_used": "array",
+        "status_codes": "array"
+      }
+    },
+    "expected_output": {
+      "code": "const router = express.Router();\nrouter.post('/resource', authenticate, validate(schema), async (req, res, next) => {\n  try { const result = await service.create(req.body); res.status(201).json({ success: true, data: result }); } catch(err) { next(err); }\n});\nexport default router;",
+      "chain_executed": [
+        "validate",
+        "auth",
+        "logic",
+        "response",
+        "error_handling"
+      ],
+      "http_methods": [
+        "POST"
+      ],
+      "middleware_used": [
+        "authenticate",
+        "validateBody",
+        "asyncWrapper",
+        "errorHandler"
+      ],
+      "status_codes": [
+        200,
+        201,
+        400,
+        401,
+        403,
+        422,
+        500
+      ]
+    }
+  },
+  "reliability_note": "Express REST route with Zod validation, JWT auth middleware, async error handling, and structured JSON responses. Achieves 95%+ parseability through strict schema enforcement, enum constraints, and sequential chain-of-thought execution. Compatible with both Anthropic tool_use and OpenAI function_calling APIs.",
+  "compatible_models": [
+    "claude-opus-4-7",
+    "claude-sonnet-4-6",
+    "claude-opus-4-6",
+    "claude-haiku-4-5-20251001",
+    "gpt-4o",
+    "gpt-4-turbo"
+  ],
+  "api_compatibility": [
+    "Anthropic tool_use API",
+    "OpenAI function_calling API"
+  ],
+  "version": "2.0",
+  "last_updated": "2025-2026"
+}
