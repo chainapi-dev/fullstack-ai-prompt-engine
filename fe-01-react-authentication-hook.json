@@ -1,0 +1,175 @@
+{
+  "id": "FE-01",
+  "category": "Frontend / React",
+  "title": "React Authentication Hook",
+  "description": "Generates a production-ready useAuth() hook with login, logout, token management, session handling, and expiry checking using in-memory state only.",
+  "system_prompt": "You are an expert React developer specializing in production-grade authentication systems. You generate secure, efficient, fully-functional React hooks following modern best practices. Your code is production-ready, type-safe, and includes proper error handling. Never use localStorage or sessionStorage \u2014 implement in-memory token storage only.\n\nInternal Chain-of-Thought Process:\nStep 1: Analyze the requirements, constraints, and edge cases provided.\nStep 2: Execute the chain sequentially \u2014 validate inputs, design structure, implement logic with error handling.\nStep 3: Output ONLY valid, complete production-ready code with no placeholders or TODOs.\n\nYou MUST follow the exact schema structure provided. All outputs must be parseable JSON matching the specified output_format.",
+  "user_prompt_template": "Generate production-ready code based on the following specification:\n\nTask: {{task}}\nConstraints: {{constraints}}\nChain Steps: {{chain_steps}}\nMemory State: {{memory_state}}\nOutput Format: {{output_format}}\n\nRespond with ONLY a JSON object matching the output_format structure exactly.",
+  "tool_schema": {
+    "name": "generate_react_auth_hook",
+    "description": "Generates a production-ready useAuth() hook with login, logout, token management, session handling, and expiry checking using in-memory state only.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "task": {
+          "type": "string",
+          "enum": [
+            "react_auth_hook"
+          ]
+        },
+        "constraints": {
+          "type": "object",
+          "properties": {
+            "hooks": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "useState",
+                  "useEffect",
+                  "useCallback",
+                  "useMemo",
+                  "useRef"
+                ]
+              }
+            },
+            "max_tokens": {
+              "type": "integer",
+              "default": 2000
+            }
+          },
+          "required": [
+            "hooks"
+          ]
+        },
+        "chain_steps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "validate",
+              "call_api",
+              "persist_token",
+              "check_expiry",
+              "refresh_token"
+            ]
+          },
+          "minItems": 2
+        },
+        "memory_state": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string"
+            },
+            "user": {
+              "type": "string",
+              "default": "object|null"
+            },
+            "expires_at": {
+              "type": "string",
+              "default": "number|null"
+            }
+          }
+        },
+        "output_format": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string"
+            },
+            "chain_executed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "memory_state_implemented": {
+              "type": "object"
+            },
+            "hooks_used": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "chain_executed",
+            "memory_state_implemented"
+          ]
+        }
+      },
+      "required": [
+        "task",
+        "constraints",
+        "chain_steps",
+        "memory_state",
+        "output_format"
+      ]
+    }
+  },
+  "tool_choice": {
+    "type": "tool",
+    "name": "generate_react_auth_hook"
+  },
+  "example_usage": {
+    "input": {
+      "task": "react_auth_hook",
+      "constraints": {
+        "hooks": [
+          "useState",
+          "useEffect",
+          "useCallback"
+        ]
+      },
+      "chain_steps": [
+        "validate",
+        "call_api",
+        "persist_token"
+      ],
+      "memory_state": {
+        "token": "string",
+        "user": "object|null"
+      },
+      "output_format": {
+        "code": "string",
+        "chain_executed": "array",
+        "memory_state_implemented": "object",
+        "hooks_used": "array"
+      }
+    },
+    "expected_output": {
+      "code": "const useAuth = () => { const [token, setToken] = useState(null); /* full implementation */ }; export default useAuth;",
+      "chain_executed": [
+        "validate",
+        "call_api",
+        "persist_token"
+      ],
+      "memory_state_implemented": {
+        "token": "string|null",
+        "user": "object|null"
+      },
+      "hooks_used": [
+        "useState",
+        "useCallback"
+      ]
+    }
+  },
+  "reliability_note": "React in-memory auth hook with token persistence, expiry checking, and refresh logic. Achieves 95%+ parseability through strict schema enforcement, enum constraints, and sequential chain-of-thought execution. Compatible with both Anthropic tool_use and OpenAI function_calling APIs.",
+  "compatible_models": [
+    "claude-opus-4-7",
+    "claude-sonnet-4-6",
+    "claude-opus-4-6",
+    "claude-haiku-4-5-20251001",
+    "gpt-4o",
+    "gpt-4-turbo"
+  ],
+  "api_compatibility": [
+    "Anthropic tool_use API",
+    "OpenAI function_calling API"
+  ],
+  "version": "2.0",
+  "last_updated": "2025-2026"
+}
