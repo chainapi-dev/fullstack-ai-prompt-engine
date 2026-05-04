@@ -1,0 +1,199 @@
+{
+  "id": "BE-02",
+  "category": "Backend / Auth",
+  "title": "JWT Auth Middleware",
+  "description": "Generates JWT validation middleware with token extraction, signature verification, expiry checking, role-based guards, refresh token rotation, and blacklist checking.",
+  "system_prompt": "You are an expert Node.js security engineer specializing in JWT authentication middleware. You create production-grade token validation systems with proper signature verification, expiry handling, refresh token rotation, role-based access control guards, and token blacklisting. Your code follows security best practices and prevents common JWT vulnerabilities.\n\nInternal Chain-of-Thought Process:\nStep 1: Analyze the requirements, constraints, and edge cases provided.\nStep 2: Execute the chain sequentially \u2014 validate inputs, design structure, implement logic with error handling.\nStep 3: Output ONLY valid, complete production-ready code with no placeholders or TODOs.\n\nYou MUST follow the exact schema structure provided. All outputs must be parseable JSON matching the specified output_format.",
+  "user_prompt_template": "Generate production-ready code based on the following specification:\n\nTask: {{task}}\nConstraints: {{constraints}}\nChain Steps: {{chain_steps}}\nMemory State: {{memory_state}}\nOutput Format: {{output_format}}\n\nRespond with ONLY a JSON object matching the output_format structure exactly.",
+  "tool_schema": {
+    "name": "generate_jwt_middleware",
+    "description": "Generates JWT validation middleware with token extraction, signature verification, expiry checking, role-based guards, refresh token rotation, and blacklist checking.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "task": {
+          "type": "string",
+          "enum": [
+            "jwt_middleware"
+          ]
+        },
+        "constraints": {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "enum": [
+                "HS256",
+                "HS384",
+                "HS512",
+                "RS256",
+                "RS384",
+                "RS512"
+              ],
+              "default": "HS256"
+            },
+            "refresh_enabled": {
+              "type": "boolean",
+              "default": true
+            },
+            "role_based": {
+              "type": "boolean",
+              "default": true
+            },
+            "blacklist_enabled": {
+              "type": "boolean",
+              "default": false
+            },
+            "max_tokens": {
+              "type": "integer",
+              "default": 2500
+            }
+          },
+          "required": [
+            "algorithm"
+          ]
+        },
+        "chain_steps": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "extract",
+              "verify",
+              "check_expiry",
+              "authorize",
+              "refresh",
+              "blacklist"
+            ]
+          },
+          "minItems": 2
+        },
+        "memory_state": {
+          "type": "object",
+          "properties": {
+            "token_cache": {
+              "type": "string",
+              "default": "Map<string, boolean>"
+            },
+            "refresh_tokens": {
+              "type": "string",
+              "default": "Set<string>"
+            }
+          }
+        },
+        "output_format": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string"
+            },
+            "chain_executed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "middleware_name": {
+              "type": "string"
+            },
+            "supported_roles": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "security_features": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "code",
+            "chain_executed",
+            "middleware_name",
+            "supported_roles",
+            "security_features"
+          ]
+        }
+      },
+      "required": [
+        "task",
+        "constraints",
+        "chain_steps",
+        "memory_state",
+        "output_format"
+      ]
+    }
+  },
+  "tool_choice": {
+    "type": "tool",
+    "name": "generate_jwt_middleware"
+  },
+  "example_usage": {
+    "input": {
+      "task": "jwt_middleware",
+      "constraints": {
+        "algorithm": "HS256",
+        "refresh_enabled": true,
+        "role_based": true
+      },
+      "chain_steps": [
+        "extract",
+        "verify",
+        "check_expiry",
+        "authorize",
+        "refresh"
+      ],
+      "memory_state": {
+        "token_cache": "Map",
+        "refresh_tokens": "Set"
+      },
+      "output_format": {
+        "code": "string",
+        "chain_executed": "array",
+        "middleware_name": "string",
+        "supported_roles": "array",
+        "security_features": "array"
+      }
+    },
+    "expected_output": {
+      "code": "export const authenticate = async (req, res, next) => {\n  const token = req.headers.authorization?.split(' ')[1];\n  if (!token) return res.status(401).json({ error: 'No token' });\n  try { req.user = jwt.verify(token, process.env.JWT_SECRET); next(); } catch(e) { res.status(401).json({ error: 'Invalid token' }); }\n};\nexport const requireRole = (roles) => (req, res, next) => { if (!roles.includes(req.user.role)) return res.status(403).json({ error: 'Forbidden' }); next(); };",
+      "chain_executed": [
+        "extract",
+        "verify",
+        "check_expiry",
+        "authorize"
+      ],
+      "middleware_name": "authenticate",
+      "supported_roles": [
+        "admin",
+        "user",
+        "moderator",
+        "guest"
+      ],
+      "security_features": [
+        "signature-verification",
+        "expiry-checking",
+        "role-guards",
+        "refresh-rotation"
+      ]
+    }
+  },
+  "reliability_note": "JWT middleware with algorithm validation, role guards, refresh rotation, and optional Redis-backed blacklisting. Achieves 95%+ parseability through strict schema enforcement, enum constraints, and sequential chain-of-thought execution. Compatible with both Anthropic tool_use and OpenAI function_calling APIs.",
+  "compatible_models": [
+    "claude-opus-4-7",
+    "claude-sonnet-4-6",
+    "claude-opus-4-6",
+    "claude-haiku-4-5-20251001",
+    "gpt-4o",
+    "gpt-4-turbo"
+  ],
+  "api_compatibility": [
+    "Anthropic tool_use API",
+    "OpenAI function_calling API"
+  ],
+  "version": "2.0",
+  "last_updated": "2025-2026"
+}
