@@ -77,7 +77,7 @@ Do not redistribute or resell the JSON files.
 
 ---
 
-*Built by [ChainAPI](https://gumroad.com/chainapi) · Mumbai, India · © 2026*
+*Built by [ChainAPI](https://gumroad.com/chainapi) · © 2026*
 
 33 production-grade JSON prompt templates for Claude & OpenAI tool_use APIs — React, Node.js, DevOps. Free 3-prompt preview inside.
 
